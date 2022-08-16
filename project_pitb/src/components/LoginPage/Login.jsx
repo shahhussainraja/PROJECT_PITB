@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import "./Style.css"
 import authServices from '../Services/AuthServices';
 import { useState } from 'react';
+import Slide from 'react-reveal/Slide';
 
 const Login  = () => {
   
@@ -28,10 +29,8 @@ const Login  = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log();
+    const data = new FormData(event.currentTarget); 
     authServices.login(data.get('email'),data.get('password')).then((res)=>{
-      console.log(res.data);
       window.location.reload();
     }).catch((err)=>{
       console.log(err.response.data);
@@ -44,24 +43,26 @@ const Login  = () => {
     })
     
   };
-
     return ( 
         <>
-       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid  className='logo'
+       <Grid container component="main" sx={{ height: '100vh' ,paddingTop:"1rem" }}>
+        <Grid 
           item
           xs={false}
           sm={4}
           md={7}
           sx={{
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundPosition: 'center',
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center"
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        >
+        <Slide left>
+        <img className='logo' src={require('./government-of-punjab-logo-1E1A7AB42A-seeklogo.com.png')} alt="" />
+        </Slide>
+        </Grid>  
+        
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square >
           <Box
             sx={{
               my: 8,
@@ -116,8 +117,9 @@ const Login  = () => {
           
         </Grid>
       </Grid> 
-        </>
+    </>
      );
 }
  
 export default Login ;
+
