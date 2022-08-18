@@ -2,10 +2,6 @@ import React from 'react';
 import TextField from '@mui/material/TextField'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -14,9 +10,11 @@ import Typography from '@mui/material/Typography';
 import "./Style.css"
 import authServices from '../Services/AuthServices';
 import { useState } from 'react';
-import Slide from 'react-reveal/Slide';
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion"
 
 const Login  = () => {
+  let navigate = useNavigate();
   
   const [errStyle, setErrStyle] = useState({
     marginTop:"0px",
@@ -31,7 +29,10 @@ const Login  = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget); 
     authServices.login(data.get('email'),data.get('password')).then((res)=>{
+      navigate("/");
       window.location.reload();
+      
+
     }).catch((err)=>{
       console.log(err.response.data);
       if(err.response.data === false){
@@ -45,7 +46,7 @@ const Login  = () => {
   };
     return ( 
         <>
-       <Grid container component="main" sx={{ height: '100vh' ,paddingTop:"1rem" }}>
+       <Grid container component="main" sx={{ height: '100vh' ,paddingTop:"1rem"}}>
         <Grid 
           item
           xs={false}
@@ -57,12 +58,23 @@ const Login  = () => {
             alignItems:"center"
           }}
         >
-        <Slide left>
-        <img className='logo' src={require('./government-of-punjab-logo-1E1A7AB42A-seeklogo.com.png')} alt="" />
-        </Slide>
+
+        <motion.div  
+         initial={{ opacity: 0, scale: 0.5 }}
+         animate={{ opacity: 1, scale: 1 }}
+         transition={{
+           duration: 0.8,
+           delay: 0.5,
+           ease: [0, 0.71, 0.2, 1.01]
+         }}
+        >
+        <img className='logo' src={require('../../logo.png')} alt="" />
+        </motion.div>
+       
         </Grid>  
         
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square >
+        <Grid item xs={12} sm={8} md={5} component={Paper} sx={{
+        }} elevation={6} square >
           <Box
             sx={{
               my: 8,
@@ -80,6 +92,7 @@ const Login  = () => {
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
+                size="small"
                 margin="normal"
                 fullWidth
                 id="email"
@@ -90,8 +103,8 @@ const Login  = () => {
                 
               />
               <TextField
+                size="small"
                 margin="normal"
-                required
                 fullWidth
                 name="password"
                 label="Password"
