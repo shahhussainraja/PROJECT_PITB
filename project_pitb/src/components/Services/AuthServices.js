@@ -10,6 +10,8 @@ class AuthServices extends GenericServices{
         return new Promise ((resolve,reject)=>{
             this.post("/login",{email, password}).then((token)=>{
                 localStorage.setItem("token",token)
+                window.location.reload();
+                window.location.href="/";
                 resolve(token);
             }).catch((err)=>{
                 reject(err);

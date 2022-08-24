@@ -1,3 +1,6 @@
+//TO read enviroment variable 
+require('dotenv').config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -18,6 +21,11 @@ db.connect((err)=>{
 
 //Server Router are here
 var usersRouter = require('./routes/users');
+var docsRouter = require("./routes/docsRoutes")
+var managersRouter = require("./routes/MetaDataRoutes/managers")
+var dgRouter = require("./routes/MetaDataRoutes/dg")
+var developersRouter = require("./routes/MetaDataRoutes/developers")
+var coordinatorsRouter = require("./routes/MetaDataRoutes/coordinators")
 
 
 // view engine setup
@@ -34,6 +42,11 @@ app.use(cors());
 
 
 app.use('/', usersRouter);
+app.use('/', docsRouter);
+app.use('/', managersRouter);
+app.use('/', dgRouter);
+app.use('/', developersRouter);
+app.use('/', coordinatorsRouter);
 
 
 console.log("server is running on port 8080");

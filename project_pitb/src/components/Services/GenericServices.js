@@ -1,6 +1,7 @@
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8080/user"
-// axios.defaults.headers.common["Authorization"] = localStorage.getItem("token");
+axios.defaults.baseURL = "http://localhost:8080"
+axios.defaults.headers.common["Authorization"] = localStorage.getItem("token");
+
 class GenericServices {
   constructor() {}
 
