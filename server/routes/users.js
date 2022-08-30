@@ -25,7 +25,8 @@ router.post('/login',function(req, res) {
         id:results[0].id,
         email:results[0].Email
       }
-      let token = jwt.sign(payload,process.env.jwtKey,{expiresIn: 30000000000000000});
+      let token = jwt.sign(payload,process.env.jwtKey,{expiresIn: 1800});
+      // console.log(process.env.jwtExpire)
       res.status(200).send(token);
     }
   );

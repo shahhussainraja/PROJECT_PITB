@@ -1,6 +1,6 @@
 import * as React from "react";
 import Modal from "@mui/material/Modal"; 
-import { useState ,useContext } from "react";
+import { useState ,useContext ,useEffect } from "react";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,10 +11,9 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import userService from "../../Services/UserService";
-import { MainContext } from "./TableComponent";
+import { MainContext } from "./SubDepartmentTable";
 
 const BoxContainer = styled.div`
 position: relative;
@@ -29,7 +28,7 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 width: 40%;
-height: 30%;
+height: 45%;
 background-color: #f8f8f8;
 border: 1px solid #b2b2b2;
 border-radius: 5px;
@@ -54,14 +53,28 @@ font-size: 14px;
 `;
 
 
-function AddComponent() {
+function AddDepartment() {
 
   const model = useContext(MainContext);
+  const [records, setRecords] = useState({});
+  const fetchData = () => {
+    userService
+      .getFormDocs()
+      .then((res) => {
+        // console.log(res);
+        setRecords(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+  useEffect(fetchData, []);
+
   
   const handleSubmit =(event)=>{
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    userService.postDynamic(model.route,{Name:formData.get("Name")}).then((res)=>{
+    userService.postDynamic(model.route,{Name:formData.get("Name"),departmentId:formData.get("department")}).then((res)=>{
       handleClose();
       toast.success('Added Successfully', {
         position: "bottom-right",
@@ -99,12 +112,41 @@ function AddComponent() {
           <Form onSubmit={handleSubmit}>
             <Row className="mt-3">
               <Col lg={12} md={12}>
+                <Form.Group>
+                      <Form.Label
+                        className="mb-1"
+                        style={{ fontStyle: "italic", fontSize: "14px" }}
+                      >
+                        High Level Department
+                      </Form.Label>
+                      <Form.Select
+                        aria-label="Default select example"
+                        required
+                        name="department"
+                        size="sm"
+                        
+                      >
+                        {Object.keys(records).length === 0 ? false : <>
+                          <option value="">None</option>
+                          {
+                            records.departments.map((val,index)=>(
+                              <option value={val.id} key={index}>{val.Name}</option>
+                            ))
+                          }
+                        </> 
+                        }
+                      </Form.Select>
+                    </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12}  className="mb-3">
                 <Form.Group  className="mb-3"controlId="examplseForm.ControlInput1">
                   <Form.Label className="mb-1" style={{fontStyle:"italic" ,fontSize:"14px"}}>Name*</Form.Label>
                   <Form.Control type="text" placeholder="" name='Name' required size="sm"  />
                 </Form.Group>
-              </Col>
-            </Row>
+                </Col>
+            </Row>  
             <Row>
                <Col lg={12}>
                     <Button variant="success" type="submit" size="sm" className="mt-0">
@@ -136,4 +178,4 @@ function AddComponent() {
   )
 }
 
-export default AddComponent;
+export default AddDepartment;

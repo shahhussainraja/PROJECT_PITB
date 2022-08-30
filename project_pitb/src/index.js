@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import { toast } from "react-toastify"
+import authServices from './components/Services/AuthServices';
 
 //intecepter are written here
 axios.interceptors.request.use((response)=>{
@@ -23,13 +25,36 @@ axios.interceptors.response.use((response)=>{
   return response;
 },(error)=>{
   document.body.classList.remove('loading-indicator');
-  if(error.response.status === 401 ){
+
+  if(error.response.status === 400 ){
+  toast.error('Action Failed', {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    });
+  } 
+    if(error.response.status === 401 ){
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Something went wrong!',
+      text: `Unathorized for this Request`,
+    }).then(()=>{
+      authServices.logOut();
     })
   }
+
+    if(error.response.status === 500 ){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `Oops Something Went Wrong`,
+    })
+
+  }
+  
+
+
  return Promise.reject(error)
 })
 

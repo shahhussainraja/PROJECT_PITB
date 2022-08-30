@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { MainContext } from "./TableComponent";
+import { MainContext } from "./SubDepartmentTable";
 import userService from "../../Services/UserService";
     
   const BoxContainer = styled.div`
@@ -26,7 +26,7 @@ import userService from "../../Services/UserService";
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
-  height: 30%;
+  height: 45%;
   background-color: #f8f8f8;
   border: 1px solid #b2b2b2;
   border-radius: 5px;
@@ -50,9 +50,23 @@ import userService from "../../Services/UserService";
   font-size: 14px;
   `;
 
-function EditComponent({ modelHandle, setModelHandle, data}) {
+function EditDepartment({ modelHandle, setModelHandle, data}) {
 
   const context = React.useContext(MainContext)
+
+  const [records, setRecords] = useState({});
+  const fetchData = () => {
+    userService
+      .getFormDocs()
+      .then((res) => {
+        setRecords(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+React.useEffect(fetchData, []);
   
   const handleSubmit =(event)=>{
     event.preventDefault();
@@ -93,7 +107,35 @@ function EditComponent({ modelHandle, setModelHandle, data}) {
         <Container fluid >
           <Form onSubmit={handleSubmit}>
             <Row className="mt-3">
-              <Col lg={12} md={12}>
+              <Col lg={12}>
+                    <Form.Group>
+                      <Form.Label
+                        className="mb-1"
+                        style={{ fontStyle: "italic", fontSize: "14px" }}
+                      >
+                        High Level Department
+                      </Form.Label>
+                      <Form.Select
+                        aria-label="Default select example"
+                        required
+                        name="department"
+                        size="sm"
+                      >
+                        {Object.keys(records).length === 0 ? false : <>
+                          <option value={data.Higher_Department}>{data.Higher_Department}</option>
+                          {
+                            records.departments.map((val,index)=>(
+                              <option value={val.Name} key={index}>{val.Name}</option>
+                            ))
+                          }
+                        </> 
+                        }
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+            </Row>
+            <Row className="mb-3">
+            <Col lg={12} md={12}>
                 <Form.Group  className="mb-3"controlId="examplseForm.ControlInput1">
                   <Form.Label className="mb-1" style={{fontStyle:"italic" ,fontSize:"14px"}}>Name*</Form.Label>
                   <Form.Control type="text" placeholder="" name='Name' required size="sm" defaultValue={data.Name} />
@@ -101,7 +143,7 @@ function EditComponent({ modelHandle, setModelHandle, data}) {
               </Col>
             </Row>
             <Row>
-                  <Col lg={12}>
+             <Col lg={12}>
                     <Button variant="success" type="submit" size="sm" className="mt-0">
                       submit
                     </Button>
@@ -131,4 +173,4 @@ function EditComponent({ modelHandle, setModelHandle, data}) {
   )
 }
 
-export default EditComponent
+export default EditDepartment

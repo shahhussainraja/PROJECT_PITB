@@ -26,6 +26,13 @@ var managersRouter = require("./routes/MetaDataRoutes/managers")
 var dgRouter = require("./routes/MetaDataRoutes/dg")
 var developersRouter = require("./routes/MetaDataRoutes/developers")
 var coordinatorsRouter = require("./routes/MetaDataRoutes/coordinators")
+var departmentRouter = require("./routes/MetaDataRoutes/departments")
+var subDepartmentRouter = require("./routes/MetaDataRoutes/subDepartments ")
+var ndpRouter = require("./routes/MetaDataRoutes/ndp")
+var technologyRouter = require("./routes/MetaDataRoutes/technologies")
+var regionRouter = require("./routes/MetaDataRoutes/regions")
+var statusRouter = require("./routes/MetaDataRoutes/status")
+var teamRouter = require("./routes/MetaDataRoutes/teams")
 
 
 // view engine setup
@@ -47,6 +54,13 @@ app.use('/', managersRouter);
 app.use('/', dgRouter);
 app.use('/', developersRouter);
 app.use('/', coordinatorsRouter);
+app.use('/', departmentRouter);
+app.use('/', subDepartmentRouter);
+app.use('/', ndpRouter);
+app.use('/', technologyRouter);
+app.use('/', regionRouter);
+app.use('/', statusRouter);
+app.use('/',teamRouter);
 
 
 console.log("server is running on port 8080");

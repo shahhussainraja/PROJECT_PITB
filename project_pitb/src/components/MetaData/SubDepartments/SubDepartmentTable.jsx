@@ -9,14 +9,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import AddComponent from "./AddComponent";
+import AddDepartment from "./AddDepartment";
 import userService from "../../Services/UserService";
 import SingleRow from "./SingleRow";
 
 
 const MainContext = createContext();
 
-function TableComponent({route}) {
+function SubDepartmentTable({route}) {
   
     const [records,setRecords] =  React.useState([]);
     const [openModel, setOpenModel] = React.useState(false);
@@ -67,12 +67,12 @@ function TableComponent({route}) {
       </TableBody>
     </Table>
   </TableContainer>
-  <AddComponent />
+  <AddDepartment />
 </MainContext.Provider>
 
 
   )
 }
 
-export default TableComponent;
+export default SubDepartmentTable;
 export { MainContext };

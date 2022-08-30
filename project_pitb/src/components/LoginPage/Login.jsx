@@ -18,29 +18,29 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styled from "styled-components"
 
+
+const BoxContainer = styled.div`
+/* background-color: blue */
+border:2px solid black;
+border-radius: 10px;
+height:"90vh";
+display: flex;
+align-items: center;
+justify-content: center;
+`
+
 const Login = () => {
   let navigate = useNavigate();
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
 
-  const BoxContainer = styled.div`
-    background-color: blue;
-    border:2px solid black;
-    border-radius: 10px;
-    height:"90vh";
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-
-  `
   const [errStyle, setErrStyle] = useState({
     marginTop: "0px",
     marginBottom: "0px",
     paddingTop: "0px",
     paddingBottom: "0px",
-    color: "red",
+    color: "#fefefe",
     display: "none",
   });
 
@@ -54,16 +54,16 @@ const Login = () => {
         if (err.response.data === false) {
           setErrStyle({
             display: "block",
-            color: "red",
+            color: "#fefefe",
           });
         }
       });
   };
 
   return (
-    <>
-            <Container fluid >
-              <Row style={{backgroundColor:"ghostWhite",height:"100vh"}}> 
+    <>      
+            <Container fluid> 
+              <Row style={{height:"100vh"}} className="background"> 
                   <Col lg={6} style={{display:"flex",justifyContent:"center",alignItems:"center" }}>
                   <motion.div
                         initial={{ opacity: 0, scale: 0.5 }}
@@ -89,7 +89,7 @@ const Login = () => {
               <Avatar sx={{ m: 1, backgroundColor: "#295c98" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              <Typography component="h1" variant="h5" style={{color:"white"}}>
                 Sign in
               </Typography>
               <Box
@@ -97,6 +97,7 @@ const Login = () => {
                 sx={{ mt: 1 }}
               >
                 <TextField
+                  InputProps={{ inputProps: { style: { color: '#fff' }}}}
                   size="small"
                   margin="normal"
                   fullWidth
@@ -110,13 +111,12 @@ const Login = () => {
                   }}
                 />
                 <TextField
+                InputProps={{ inputProps: { style: { color: '#fff' }}}}
                   size="small"
                   margin="normal"
                   fullWidth
                   name="password"
-                  label="Password"
                   type="password"
-                  id="password"
                   autoComplete="current-password"
                   onChange={(e)=>{
                     setPassword(e.target.value);
@@ -146,8 +146,7 @@ const Login = () => {
           </Col>
           <Col lg={2}></Col>
         </Row>
-      </Container>
-             
+      </Container>  
     </>
   );
 };

@@ -3,8 +3,8 @@ var router = express.Router();
 const  db = require('../../dbConnection');
 
 
-router.get("/managers",(req,res)=>{
-    db.query('SELECT * FROM `managers` ',
+router.get("/ndp",(req,res)=>{
+    db.query('SELECT * FROM `ndp_pc-1` ',
       function(err, results) {
         if(err){
           console.log(err);
@@ -16,44 +16,10 @@ router.get("/managers",(req,res)=>{
     );
 })
 
-
-router.post("/managers",(req,res)=>{
-  let status = req.body.Name;
-  db.query("INSERT INTO `managers` (Name) VALUES (?)",
-  [status],
-    function(err, results) {
-      if(err){
-        console.log(err);
-        res.status(400).send(err.message);  
-        return ;
-      }
-      res.status(200).send(results);
-  }
-  );
-})
-
-
-
-router.delete("/managers/:id",(req,res)=>{
-  let id = req.params.id;
-  db.query("DELETE FROM `managers` WHERE `id` = ?",[id],
-    function(err, results) {
-      if(err){
-        console.log(err);
-        res.status(400).send(err.message);  
-        return ;
-      }
-      res.status(200).send(results);
-  }
-  );
-})
-
-
-
-router.put("/managers/:id",(req,res)=>{
-  let data = req.body.Name;
-  let id = req.params.id;
-  db.query("UPDATE `managers` SET `Name`=? WHERE `id`=? ",[data,id],
+router.post("/ndp",(req,res)=>{
+  let ndp = req.body.Name;
+  db.query("INSERT INTO `ndp_pc-1` (Name) VALUES (?)",
+  [ndp],
     function(err, results) {
       if(err){
         console.log(err);
@@ -66,6 +32,36 @@ router.put("/managers/:id",(req,res)=>{
 });
 
 
+
+router.delete("/ndp/:id",(req,res)=>{
+  let id = req.params.id;
+  db.query("DELETE FROM `ndp_pc-1` WHERE `id` = ?",[id],
+    function(err, results) {
+      if(err){
+        console.log(err);
+        res.status(400).send(err.message);  
+        return ;
+      }
+      res.status(200).send(results);
+  }
+  );
+})
+
+
+router.put("/ndp/:id",(req,res)=>{
+  let data = req.body.Name;
+  let id = req.params.id;
+  db.query("UPDATE `ndp` SET `Name`=? WHERE `id`=? ",[data,id],
+    function(err, results) {
+      if(err){
+        console.log(err);
+        res.status(400).send(err.message);  
+        return ;
+      }
+      res.status(200).send(results);
+  }
+  );
+});
 
 
 

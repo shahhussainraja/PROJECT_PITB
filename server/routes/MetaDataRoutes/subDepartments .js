@@ -3,8 +3,8 @@ var router = express.Router();
 const  db = require('../../dbConnection');
 
 
-router.get("/managers",(req,res)=>{
-    db.query('SELECT * FROM `managers` ',
+router.get("/subDepartments",(req,res)=>{
+    db.query('SELECT * FROM `sub_department`',
       function(err, results) {
         if(err){
           console.log(err);
@@ -17,10 +17,9 @@ router.get("/managers",(req,res)=>{
 })
 
 
-router.post("/managers",(req,res)=>{
-  let status = req.body.Name;
-  db.query("INSERT INTO `managers` (Name) VALUES (?)",
-  [status],
+router.post("/subDepartments",(req,res)=>{
+  db.query("INSERT INTO `sub_department` (Name,H_departmentId) VALUES (?,?)",
+  [req.body.Name,req.body.departmentId],
     function(err, results) {
       if(err){
         console.log(err);
@@ -34,9 +33,9 @@ router.post("/managers",(req,res)=>{
 
 
 
-router.delete("/managers/:id",(req,res)=>{
+router.delete("/subDepartments/:id",(req,res)=>{
   let id = req.params.id;
-  db.query("DELETE FROM `managers` WHERE `id` = ?",[id],
+  db.query("DELETE FROM `sub_department` WHERE `id` = ?",[id],
     function(err, results) {
       if(err){
         console.log(err);
@@ -47,23 +46,6 @@ router.delete("/managers/:id",(req,res)=>{
   }
   );
 })
-
-
-
-router.put("/managers/:id",(req,res)=>{
-  let data = req.body.Name;
-  let id = req.params.id;
-  db.query("UPDATE `managers` SET `Name`=? WHERE `id`=? ",[data,id],
-    function(err, results) {
-      if(err){
-        console.log(err);
-        res.status(400).send(err.message);  
-        return ;
-      }
-      res.status(200).send(results);
-  }
-  );
-});
 
 
 

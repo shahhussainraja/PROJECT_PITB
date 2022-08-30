@@ -10,20 +10,20 @@ const Container = styled.div`
 display: flex;
 padding-top:6px;
 padding-left: 0px;
-height: 100%;
 
 `
 
 const Left = styled.div`
+left: 0px;
 padding-top: 10px;
 font-size: 15px;
 flex: 1;
 display: flex;
 flex-direction: column;
-align-items: left;
-background-color: #25506f;
+align-items: left;  
+background-color: #2a4c64;
 color: white;
-border-radius: 5px;
+border-radius: 0px 5px 5px 0px;
 `
 
 const Right = styled.div`
@@ -43,12 +43,15 @@ function MetaData() {
     <Left>
         <Link to="DGs" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>DG's</Link>    
         <Link to="Managers" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Managers</Link>    
-        <Link to="PM/Coordinator" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>PM/Cordinator</Link>    
+        <Link to="PM/Coordinator" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>PM/Coordinators</Link>    
         <Link to="Developers" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Lead Developers</Link>    
-        <Link to="profile" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Departments</Link>    
-        <Link to="profile" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Sub Departments</Link>    
-        <Link to="profile" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Technologies</Link>    
-        <Link to="profile" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>NDP/PC-1</Link>    
+        <Link to="Departments" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Departments</Link>    
+        <Link to="SubDepartments" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Sub Departments</Link>    
+        <Link to="Technologies" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Technologies</Link>    
+        <Link to="NDP-PC" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>NDP/PC-1</Link>    
+        <Link to="Teams" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Teams</Link>    
+        <Link to="Regions" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Regions</Link>    
+        <Link to="Status" className='Link' style={{ color: "inherit", textDecoration: "inherit",marginBottom:"2px",paddingLeft:"20px"}}>Status</Link>    
     </Left>
     <Right>
         <Outlet />  

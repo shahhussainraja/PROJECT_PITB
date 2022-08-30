@@ -1,8 +1,18 @@
 .logo{
     display: block;
-    height: 270px;
+    height: 250px;
     z-index: 1;
 }
+
+.background{
+    
+    background-image: linear-gradient(to right, #243748 , #4b749f);
+    /* background-image: url("./pexels-gradienta-7130475.jpg"); */
+    /* background-size: cover; */
+    z-index: 100;
+
+}
+
 
 @media (max-width:480px){
     .logo{

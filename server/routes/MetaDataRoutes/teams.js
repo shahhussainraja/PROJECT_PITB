@@ -3,8 +3,8 @@ var router = express.Router();
 const  db = require('../../dbConnection');
 
 
-router.get("/managers",(req,res)=>{
-    db.query('SELECT * FROM `managers` ',
+router.get("/teams",(req,res)=>{
+    db.query('SELECT * FROM `teams` ',
       function(err, results) {
         if(err){
           console.log(err);
@@ -17,10 +17,10 @@ router.get("/managers",(req,res)=>{
 })
 
 
-router.post("/managers",(req,res)=>{
-  let status = req.body.Name;
-  db.query("INSERT INTO `managers` (Name) VALUES (?)",
-  [status],
+router.post("/teams",(req,res)=>{
+  let teams = req.body.Name;
+  db.query("INSERT INTO `teams` (Name) VALUES (?)",
+  [teams],
     function(err, results) {
       if(err){
         console.log(err);
@@ -33,10 +33,9 @@ router.post("/managers",(req,res)=>{
 })
 
 
-
-router.delete("/managers/:id",(req,res)=>{
+router.delete("/teams/:id",(req,res)=>{
   let id = req.params.id;
-  db.query("DELETE FROM `managers` WHERE `id` = ?",[id],
+  db.query("DELETE FROM `teams` WHERE `id` = ?",[id],
     function(err, results) {
       if(err){
         console.log(err);
@@ -50,10 +49,11 @@ router.delete("/managers/:id",(req,res)=>{
 
 
 
-router.put("/managers/:id",(req,res)=>{
+
+router.put("/teams/:id",(req,res)=>{
   let data = req.body.Name;
   let id = req.params.id;
-  db.query("UPDATE `managers` SET `Name`=? WHERE `id`=? ",[data,id],
+  db.query("UPDATE `teams` SET `Name`=? WHERE `id`=? ",[data,id],
     function(err, results) {
       if(err){
         console.log(err);
@@ -64,11 +64,6 @@ router.put("/managers/:id",(req,res)=>{
   }
   );
 });
-
-
-
-
-
 
 
 

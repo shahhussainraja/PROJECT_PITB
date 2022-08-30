@@ -9,8 +9,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import EditComponent from './EditComponent';
-import {MainContext} from "./TableComponent"
+import EditComponent from './EditDepartment';
+import {MainContext} from "./SubDepartmentTable"
 import { useContext } from 'react';
 import userService from '../../Services/UserService';
 
@@ -103,7 +103,7 @@ function SingleRow({ data , value }) {
               <StyledTableCell align="left">{data.Name}</StyledTableCell>
                 <StyledTableCell align="left">
               <Dropdown>
-                  <Dropdown.Toggle variant="Light" id="dropdown-basic" size='sm'>
+                  <Dropdown.Toggle variant="Light" id="dropdown-basic" size="sm">
                     <MoreHorizOutlinedIcon />
                   </Dropdown.Toggle>
                   <Dropdown.Menu style={{minWidth:"0px"}}>
