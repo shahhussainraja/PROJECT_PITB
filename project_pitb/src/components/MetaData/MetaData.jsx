@@ -10,7 +10,6 @@ const Container = styled.div`
 display: flex;
 padding-top:6px;
 padding-left: 0px;
-
 `
 
 const Left = styled.div`

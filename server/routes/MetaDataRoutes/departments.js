@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const  db = require('../../dbConnection');
+const auth = require("../../Middleware/auth")
 
-
-router.get("/departments",(req,res)=>{
+router.get("/departments",auth,(req,res)=>{
     db.query('SELECT * FROM `higher_department` ',
       function(err, results) {
         if(err){
@@ -17,7 +17,7 @@ router.get("/departments",(req,res)=>{
 })
 
 
-router.post("/departments",(req,res)=>{
+router.post("/departments",auth,(req,res)=>{
   let departments = req.body.Name;
   db.query("INSERT INTO `higher_department` (Name) VALUES (?)",
   [departments],
@@ -33,7 +33,7 @@ router.post("/departments",(req,res)=>{
 });
 
 
-router.delete("/departments/:id",(req,res)=>{
+router.delete("/departments/:id",auth,(req,res)=>{
   let id = req.params.id;
   db.query("DELETE FROM `higher_department` WHERE `id` = ?",[id],
     function(err, results) {
@@ -48,7 +48,7 @@ router.delete("/departments/:id",(req,res)=>{
 })
 
 
-router.put("/departments/:id",(req,res)=>{
+router.put("/departments/:id",auth,(req,res)=>{
   let data = req.body.Name;
   let id = req.params.id;
   db.query("UPDATE `higher_department` SET `Name`=? WHERE `id`=? ",[data,id],

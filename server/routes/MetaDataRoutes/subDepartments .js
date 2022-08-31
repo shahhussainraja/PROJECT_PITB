@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const  db = require('../../dbConnection');
+const auth = require("../../Middleware/auth")
 
-
-router.get("/subDepartments",(req,res)=>{
+router.get("/subDepartments",auth,(req,res)=>{
     db.query('SELECT * FROM `sub_department`',
       function(err, results) {
         if(err){
@@ -17,7 +17,7 @@ router.get("/subDepartments",(req,res)=>{
 })
 
 
-router.post("/subDepartments",(req,res)=>{
+router.post("/subDepartments",auth,(req,res)=>{
   db.query("INSERT INTO `sub_department` (Name,H_departmentId) VALUES (?,?)",
   [req.body.Name,req.body.departmentId],
     function(err, results) {
@@ -33,7 +33,7 @@ router.post("/subDepartments",(req,res)=>{
 
 
 
-router.delete("/subDepartments/:id",(req,res)=>{
+router.delete("/subDepartments/:id",auth,(req,res)=>{
   let id = req.params.id;
   db.query("DELETE FROM `sub_department` WHERE `id` = ?",[id],
     function(err, results) {

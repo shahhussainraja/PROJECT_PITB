@@ -33,6 +33,7 @@ var technologyRouter = require("./routes/MetaDataRoutes/technologies")
 var regionRouter = require("./routes/MetaDataRoutes/regions")
 var statusRouter = require("./routes/MetaDataRoutes/status")
 var teamRouter = require("./routes/MetaDataRoutes/teams")
+var reportRouter = require("./routes/reportRoutes")
 
 
 // view engine setup
@@ -61,6 +62,7 @@ app.use('/', technologyRouter);
 app.use('/', regionRouter);
 app.use('/', statusRouter);
 app.use('/',teamRouter);
+app.use('/',reportRouter);
 
 
 console.log("server is running on port 8080");

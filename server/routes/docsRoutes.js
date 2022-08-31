@@ -30,7 +30,7 @@ router.get('/docs',auth,(req, res)=>{
     });
   });
 
-  router.post('/docs',(req, res)=>{
+  router.post('/docs',auth,(req, res)=>{
     const data = req.body;    
     db.query('INSERT INTO `projectwiseresources` (Project,Year,Manager,PM_Coordinator,Status,Department,Higher_Department,NDP_PC,Concerned_DG,Region,Technology,R_Working_on_Active_Projects,Techinical_Lead_Web,Techinical_Lead_Android,GITLAB_ID,Android_Repo,iOS_Repo,Web_Repo,Continuous_Development,Continuous_Integration,team,URL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
        [data.project,data.date,data.manager,data.coordinator,data.status,data.subDepartment,data.department,data.ndp,data.concernDg,data.region,data.technology,data.Resources,data.techLeadWeb,data.techLeadAndroid,data.gitLabId,data.androidRepo,data.iOsRepo,data.webRepo,data.continousDev,data.continousInt,data.team,data.url]
@@ -45,9 +45,8 @@ router.get('/docs',auth,(req, res)=>{
      );
    });
  
-  router.put('/docs/:id',(req, res)=>{
+  router.put('/docs/:id',auth,(req, res)=>{
     const data = req.body;    
-    console.log(req.params.id);
     db.query('UPDATE `projectwiseresources` SET `Project`=?, `Year`=?, `Manager`=?, `PM_Coordinator`=?, `Status`=?, `Department`=?, `Higher_Department`=?, `NDP_PC`=?, `Concerned_DG`=?, `Region`=?, `Technology`=?, `R_Working_on_Active_Projects`=?, `Techinical_Lead_Web`=?, `Techinical_Lead_Android`=?, `GITLAB_ID`=? , `Android_Repo`=?, `iOS_Repo`=?, `Web_Repo`=?, `Continuous_Development`=?, `Continuous_Integration`=?, `team`=?, `URL`=? WHERE `id`= ?',
        [data.project,data.date,data.manager,data.coordinator,data.status,data.subDepartment,data.department,data.ndp,data.concernDg,data.region,data.technology,data.Resources,data.techLeadWeb,data.techLeadAndroid,data.gitLabId,data.androidRepo,data.iOsRepo,data.webRepo,data.continousDev,data.continousInt,data.team,data.url,req.params.id]
        ,function(err, results) {
@@ -62,7 +61,7 @@ router.get('/docs',auth,(req, res)=>{
    });
  
   
-router.delete("/docs/:id",(req,res)=>{
+router.delete("/docs/:id",auth,(req,res)=>{
   db.query("DELETE FROM `projectwiseresources` WHERE `id` = ?",[req.params.id],
     function(err, results) {
       if(err){
@@ -76,7 +75,7 @@ router.delete("/docs/:id",(req,res)=>{
 })
 
  
-router.get("/searchDocs",(req,res)=>{
+router.get("/searchDocs",auth,(req,res)=>{
 
   let sql = "SELECT * FROM projectwiseresources  WHERE project LIKE '"+req.query.search+"%'";
   db.query(sql,
@@ -94,79 +93,28 @@ router.get("/searchDocs",(req,res)=>{
   });
 
 
-
-
-  router.get("/formDocs", async(req,res)=>{
+  
+  router.get("/formDocs",auth, async(req,res)=>{
     let coordinators,departments,subDepartments,developers;
     let dg,managers,ndp,regions,status,teams,technologies;
     
     try{
       coordinators = await promiseQuery("SELECT * FROM `pm_coordinator` ");
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-  
-    try{
       departments = await promiseQuery('SELECT * FROM `higher_department` ');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-    try{
       subDepartments = await promiseQuery('SELECT * FROM `sub_department` ');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-    try{
       developers = await promiseQuery('SELECT * FROM `lead_developers` ');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-    try{
       dg = await promiseQuery('SELECT * FROM `concern_dg` ');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-    try{
       managers = await promiseQuery('SELECT * FROM `managers` '); 
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-   try{
-    regions = await promiseQuery('SELECT * FROM `regions` ');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-    try{
-    ndp = await promiseQuery('SELECT * FROM `ndp_pc-1`');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-    try{
+      regions = await promiseQuery('SELECT * FROM `regions` ');
+      ndp = await promiseQuery('SELECT * FROM `ndp_pc-1`');
       status = await promiseQuery('SELECT * FROM `status` ');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-    try{
       teams = await promiseQuery('SELECT * FROM `teams` ');
-    }catch(err){
-      res.status(400).send(err.message);
-    }
-
-
-    try{
       technologies = await promiseQuery('SELECT * FROM `technology` ');
     }catch(err){
-      res.status(400).send(err.message);
+     return  res.status(400).send(err.message);
     }
-
+  
+    
       let data = {
         coordinators:coordinators,
         departments:departments,
@@ -187,8 +135,6 @@ router.get("/searchDocs",(req,res)=>{
   
   
  
-
-  
   module.exports = router;
 
 

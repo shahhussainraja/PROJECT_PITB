@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const  db = require('../../dbConnection');
+const auth = require("../../Middleware/auth")
 
-
-router.get("/regions",(req,res)=>{
+router.get("/regions",auth,(req,res)=>{
     db.query('SELECT * FROM `regions` ',
       function(err, results) {
         if(err){
@@ -16,7 +16,7 @@ router.get("/regions",(req,res)=>{
     );
 })
 
-router.post("/regions",(req,res)=>{
+router.post("/regions",auth,(req,res)=>{
   let regions = req.body.Name;
   db.query("INSERT INTO `regions` (Name) VALUES (?)",
   [regions],
@@ -32,7 +32,7 @@ router.post("/regions",(req,res)=>{
 })
 
 
-router.delete("/regions/:id",(req,res)=>{
+router.delete("/regions/:id",auth,(req,res)=>{
   let id = req.params.id;
   db.query("DELETE FROM `regions` WHERE `id` = ?",[id],
     function(err, results) {
@@ -47,7 +47,7 @@ router.delete("/regions/:id",(req,res)=>{
 })
 
 
-router.put("/regions/:id",(req,res)=>{
+router.put("/regions/:id",auth,(req,res)=>{
   let data = req.body.Name;
   let id = req.params.id;
   db.query("UPDATE `regions` SET `Name`=? WHERE `id`=? ",[data,id],

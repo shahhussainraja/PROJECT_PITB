@@ -7,9 +7,9 @@ class UserService extends GenericServices{
         super();
     }
 
-    // getDocs = (page) => this.get("/paginationData?page="+page);
+    
     getFormDocs=()=>this.get("/formDocs");
-    getSearchDocs=(data)=>this.get("/searchDocs?search="+   data);
+    getSearchDocs=(data)=>this.get("/searchDocs?search="+data);
 
     //for project Table calls
     getDocs = (page,perPage) => this.get("/docs?page="+page+"&perPage="+perPage);
@@ -25,6 +25,14 @@ class UserService extends GenericServices{
     deleteDynamic =(route,id)=>this.delete("/"+route+"/"+id); 
     putDynamic =(route,id,data)=>this.put("/"+route+"/"+id,data); 
  
+
+    //dashBoard repots routes
+    getStatusReport =()=> this.get('/projectStatus');
+
+
+
+
+
 }
 
 let userService = new UserService();

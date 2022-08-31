@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const  db = require('../../dbConnection');
+const auth = require("../../Middleware/auth")
 
-
-router.get("/teams",(req,res)=>{
+router.get("/teams",auth,(req,res)=>{
     db.query('SELECT * FROM `teams` ',
       function(err, results) {
         if(err){
@@ -17,7 +17,7 @@ router.get("/teams",(req,res)=>{
 })
 
 
-router.post("/teams",(req,res)=>{
+router.post("/teams",auth,(req,res)=>{
   let teams = req.body.Name;
   db.query("INSERT INTO `teams` (Name) VALUES (?)",
   [teams],
@@ -33,7 +33,7 @@ router.post("/teams",(req,res)=>{
 })
 
 
-router.delete("/teams/:id",(req,res)=>{
+router.delete("/teams/:id",auth,(req,res)=>{
   let id = req.params.id;
   db.query("DELETE FROM `teams` WHERE `id` = ?",[id],
     function(err, results) {
@@ -50,7 +50,7 @@ router.delete("/teams/:id",(req,res)=>{
 
 
 
-router.put("/teams/:id",(req,res)=>{
+router.put("/teams/:id",auth,(req,res)=>{
   let data = req.body.Name;
   let id = req.params.id;
   db.query("UPDATE `teams` SET `Name`=? WHERE `id`=? ",[data,id],

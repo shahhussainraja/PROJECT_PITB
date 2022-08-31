@@ -115,6 +115,7 @@ const Login = () => {
                   size="small"
                   margin="normal"
                   fullWidth
+                  label="Password"
                   name="password"
                   type="password"
                   autoComplete="current-password"

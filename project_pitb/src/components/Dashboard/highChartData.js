@@ -10,7 +10,7 @@ let pieChartData = {
         type: 'pie'
     },
     title: {
-        text: 'Browser market shares in May, 2020'
+        text: 'Technologies'
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'
@@ -26,12 +26,11 @@ let pieChartData = {
             cursor: 'pointer',
             dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} '
+                format: '<b>{point.name}</b>: {point.percentage:.1f } '
             }
         }
     },
     series: [{
-        name: 'Brands',
         colorByPoint: true,
         data: [{
             name: 'Chrome',

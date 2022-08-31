@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const  db = require('../../dbConnection');
+const auth = require("../../Middleware/auth")
 
 
-router.get("/coordinators",(req,res)=>{
+router.get("/coordinators",auth,(req,res)=>{
     db.query('SELECT * FROM `pm_coordinator` ',
       function(err, results) {
         if(err){
@@ -17,7 +18,7 @@ router.get("/coordinators",(req,res)=>{
 })
 
 
-router.post("/coordinators",(req,res)=>{
+router.post("/coordinators",auth,(req,res)=>{
   let coordinators = req.body.Name;
   db.query("INSERT INTO `pm_coordinator` (Name) VALUES (?)",
   [coordinators],
@@ -32,7 +33,7 @@ router.post("/coordinators",(req,res)=>{
 });
 
     
-router.delete("/coordinators/:id",(req,res)=>{
+router.delete("/coordinators/:id",auth,(req,res)=>{
   let id = req.params.id;
   db.query("DELETE FROM `pm_coordinator` WHERE `id` = ?",[id],
     function(err, results) {
@@ -46,7 +47,7 @@ router.delete("/coordinators/:id",(req,res)=>{
   );
 })
 
-router.put("/coordinators/:id",(req,res)=>{
+router.put("/coordinators/:id",auth,(req,res)=>{
   let data = req.body.Name;
   let id = req.params.id;
   db.query("UPDATE `pm_coordinator` SET `Name`=? WHERE `id`=? ",[data,id],
