@@ -100,6 +100,7 @@ function SingleRow({ data , value }) {
     <>
     <StyledTableRow>
               <StyledTableCell align="left">{value}</StyledTableCell>
+              <StyledTableCell align="left">{data.higher_departmentName}</StyledTableCell>
               <StyledTableCell align="left">{data.Name}</StyledTableCell>
                 <StyledTableCell align="left">
               <Dropdown>

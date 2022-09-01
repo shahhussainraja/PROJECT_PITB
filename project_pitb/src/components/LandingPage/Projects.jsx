@@ -149,7 +149,7 @@ const StyledTableCell = styles(TableCell)(({ theme }) => ({
             <TableBody size="small">
             {records.length <=0 ?  true : <>
              { records.map((data,index)=>(
-              <SingleProject data ={data} changeHandler = {setChangeHandler} value={index} key={index} /> ))}
+              <SingleProject data ={data} changeHandler = {setChangeHandler} value={index+(perPage * (page - 1))} key={index} /> ))}
             </>}
             </TableBody>
           </Table>

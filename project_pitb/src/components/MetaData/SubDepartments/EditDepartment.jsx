@@ -71,7 +71,7 @@ React.useEffect(fetchData, []);
   const handleSubmit =(event)=>{
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    userService.putDynamic(context.route,data.id,{Name:formData.get("Name")}).then((res)=>{
+    userService.putDynamic(context.route,data.id,{Name:formData.get("Name"),departmentId:formData.get("department")}).then((res)=>{
       handleClose();
       toast.success('Updated Successfully', {
         position: "bottom-right",
@@ -125,7 +125,7 @@ React.useEffect(fetchData, []);
                           <option value={data.Higher_Department}>{data.Higher_Department}</option>
                           {
                             records.departments.map((val,index)=>(
-                              <option value={val.Name} key={index}>{val.Name}</option>
+                              <option value={val.id} key={index}>{val.Name}</option>
                             ))
                           }
                         </> 

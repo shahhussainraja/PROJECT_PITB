@@ -25,12 +25,13 @@ import SubDepartmentTable from "./components/MetaData/SubDepartments/SubDepartme
 
 
 const Container = styled.div`
-height: 100vh ;
+height: 100%;
 background-color: ghostwhite;
 
 `
 
 const NavBarContainer = styled.div`
+
   position:sticky;
   top:0px;
   z-index: 10;
@@ -58,6 +59,7 @@ const Left = styled.div`
 `;
 
 const Right = styled.div`
+
   display: flex;
   flex-direction: row-reverse;
   flex: 1;
@@ -65,11 +67,10 @@ const Right = styled.div`
 `;
 
 const Text = styled.h1`
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'Lato', sans-serif; 
   color: white;
-  font-size: 20px;
-  font-weight: bolder;
+  font-weight: bolder ;
+  font-size: 22px;
   margin: 5px;
 `;
 
@@ -93,7 +94,7 @@ const app = () => {
                         src={require("./logo.png")}
                         alt=""
                       />
-                      <Text> SE Docs</Text>
+                      <Text> SE  Docs</Text>
                     </Left>
                     <Right>
                       <Link

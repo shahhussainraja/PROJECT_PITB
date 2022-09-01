@@ -125,7 +125,7 @@ function SingleProject({  data , value }) {
               <StyledTableCell align="left">{data.GITLAB_ID}</StyledTableCell>
               <StyledTableCell align="left">{data.Android_Repo}</StyledTableCell>
               <StyledTableCell align="left">{data.iOS_Repo}</StyledTableCell>
-              <StyledTableCell align="left">{data.Web_Repo}</StyledTableCell>
+              <StyledTableCell align="left"><a href="{data.Web_Repo}" target="_blank">{data.Web_Repo}</a></StyledTableCell>
               <StyledTableCell align="left">{data.Continuous_Development}</StyledTableCell>
               <StyledTableCell align="left">{data.Continuous_Integration}</StyledTableCell>
               <StyledTableCell align="left">

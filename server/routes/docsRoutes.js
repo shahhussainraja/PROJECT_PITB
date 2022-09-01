@@ -13,7 +13,6 @@ router.get('/docs',auth,(req, res)=>{
           res.status(400).send(err.message);  
           return ;
         }
-        
         let length = results.length;
         let page =Number(req.query.page ? req.query.page : 1);
         let perPage = Number(req.query.perPage ? req.query.perPage : 9  );
@@ -52,7 +51,10 @@ router.get('/docs',auth,(req, res)=>{
        ,function(err, results) {
          if(err){
            console.log(err);
-           res.status(400).send(err.message);  
+           back={}
+           back['message']="Server down for maintinace";
+           back['error']=err.message;
+           res.status(400).send(back);  
            return ;
          }
          res.status(200).send(results); 

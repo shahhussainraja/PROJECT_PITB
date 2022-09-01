@@ -56,7 +56,8 @@ function SubDepartmentTable({route}) {
         </TableRow>      
         <TableRow >
           <StyledTableCell align="left" >#sr</StyledTableCell>
-          <StyledTableCell align="left" >Name</StyledTableCell>
+          <StyledTableCell align="left" >Department</StyledTableCell>
+          <StyledTableCell align="left" >SubDepartment</StyledTableCell>
           <StyledTableCell align="left" >Actions</StyledTableCell>
         </TableRow>
       </TableHead>

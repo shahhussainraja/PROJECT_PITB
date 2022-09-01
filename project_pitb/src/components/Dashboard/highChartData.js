@@ -1,5 +1,6 @@
 import { dark } from "highcharts";
 
+
 let pieChartData = {
     chart: {
         backgroundColor: 'ghostwhite',
@@ -26,7 +27,7 @@ let pieChartData = {
             cursor: 'pointer',
             dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f } '
+                format: '<b>{point.name}</b>: {point.percentage:.1f } actual count is {point.actualValue} '
             }
         }
     },
@@ -35,6 +36,7 @@ let pieChartData = {
         data: [{
             name: 'Chrome',
             y: 70.67,
+            actualValue:400
             // sliced: true,
             // selected: true
         }, {
@@ -116,22 +118,22 @@ let barChartData ={
         data: [38, 42]
     }, {
         name: 'Closed',
-        data: [38, 42]
+        data: [38,0]
     }, {
         name: 'Live & Infrequent Development',
-        data: [38, 42]
+        data: [38,0]
     }, {
         name: 'On Hold',
-        data: [38, 42]
+        data: [38,0]
     },{
         name: 'Transferred',
-        data: [38, 42]
+        data: [38]
     },{
         name: 'Merged into other Project',
-        data: [1, 0]
+        data: [1 ]
     },{
         name: 'Developed but not used',
-        data: [1, 0]
+        data: [1,10]
     },],
 
     responsive: {
