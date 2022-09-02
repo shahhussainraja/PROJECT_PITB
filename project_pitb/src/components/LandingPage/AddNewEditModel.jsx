@@ -17,6 +17,35 @@ import { useContext } from 'react';
 import { MainContext } from './Projects';
 
 
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+
+//multiSelect logic 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, workingResources, theme) {
+  return {
+    fontWeight:
+      workingResources.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+
 const BoxContainer = styled.div`
 position: relative;
 width: 100%;
@@ -56,23 +85,45 @@ font-size: 14px;
 `;
 
 
-const AddNewEditModel = ({ modelHandle, setModelHandle, setChangeHandler }) => {
+const AddNewEditModel = ({ modelHandle, setModelHandle}) => {
+  
   const [records, setRecords] = useState({});
   const pageRefreshCall = useContext(MainContext);
 
+
+
+  //this array for multiSelect Material ui field
+  const names = [];
+  const theme = useTheme();
+  const [workingResources, setworkingResources] = React.useState([]);
+  
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setworkingResources(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
   const fetchData = () => {
     userService
       .getFormDocs()
       .then((res) => {
-        // console.log(res);
         setRecords(res);
+
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
-
   useEffect(fetchData, []);
+
+  //For MultiSelect field 
+  if(Object.keys(records).length !== 0 ){
+    records.developers.map((e)=>(names.push(e.Name)));
+  }
+
 
   //for project initate date
   const years=[];
@@ -80,15 +131,13 @@ const AddNewEditModel = ({ modelHandle, setModelHandle, setChangeHandler }) => {
   let endYear = new Date().getFullYear();
   for(let i=endYear;i>startYear;i--){
       years.push(i);
-    }
+ }
  
     
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
-    console.log(data);
-    userService.postDocs(data).then((res)=>{
+    userService.postDocs({data,workingResources}).then((res)=>{
       setModelHandle(false);
       toast.success('Added Successfully', {
         position: "bottom-right",
@@ -156,6 +205,7 @@ const AddNewEditModel = ({ modelHandle, setModelHandle, setChangeHandler }) => {
                         name="concernDg"
                         required
                         size="sm"
+                        defaultValue="ALI HAMZA"
                       >
                         {Object.keys(records).length === 0 ? false : <>
                           <option value="">None</option>
@@ -433,18 +483,47 @@ const AddNewEditModel = ({ modelHandle, setModelHandle, setChangeHandler }) => {
                       className="mb-3"
                       controlId="examplseForm.ControlInput1"
                     >
-                      <Form.Label
+                         {/* Material Ui multiselect */}
+                        <FormControl sx={{ m: 1, width: 300,}}>
+                        <Form.Label
                         className="mb-1"
                         style={{ fontStyle: "italic", fontSize: "14px" }}
                       >
                         Resources Working on Active
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder=""
-                        name="Resources"
-                        size="sm"
-                      />
+                        </Form.Label>
+                        <Select
+                        sx={{backgroundColor:"white",width:"500px"}}
+                        size="small"         
+                        fullWidth
+                        multiple
+                        displayEmpty
+                        value={workingResources}
+                        onChange={handleChange}
+                        input={<OutlinedInput style={{fontSize:"12px",float:"left"}} />}
+                        renderValue={(selected) => {
+                        if (selected.length === 0) {
+                           return <em>select</em>;
+                           }
+
+                         return selected.join(', ');
+                        }}
+                        MenuProps={MenuProps}
+                        inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                        <MenuItem disabled value="">
+                          <em>select</em>
+                        </MenuItem>
+                        {names.map((name) => (
+                          <MenuItem
+                            key={name}
+                            value={name}
+                            style={getStyles(name, workingResources, theme)}
+                          >
+                            {name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                     </Form.Group>
                   </Col>
                   <Col lg={4}>
@@ -453,7 +532,7 @@ const AddNewEditModel = ({ modelHandle, setModelHandle, setChangeHandler }) => {
                       controlId="examplseForm.ControlInput1"
                     >
                       <Form.Label
-                        className="mb-1"
+                        className="mb-1 mt-2"
                         style={{ fontStyle: "italic", fontSize: "14px" }}
                       >
                         Team
@@ -669,20 +748,7 @@ const AddNewEditModel = ({ modelHandle, setModelHandle, setChangeHandler }) => {
             </Container>
           </Box>
 
-          {
-            // userService.postCourse({courseName,instructorName,description,link}).then((res)=>{
-            //   toast.success("updated Successfully", {
-            //   position: toast.POSITION.TOP_CENTER});
-            //   setChangeHandler(Math.floor(Math.random() * 1111111111111111));
-            //   setModelHandle(false);
-            // }).catch((err)=>{
-            //   if(err.response.status == 400){
-            //   toast.error(err.response.data, {
-            //     position: toast.POSITION.TOP_CENTER
-            //   });
-            //  }
-            // })
-          }
+       
         </BoxContainer>
       </Modal>
     </>

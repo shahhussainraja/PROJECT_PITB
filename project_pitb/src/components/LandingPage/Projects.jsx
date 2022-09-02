@@ -71,7 +71,6 @@ const Projects = () => {
     userService.getDocs(page,perPage).then((res)=>{
       setRecords(res.paginatedResult);
       setTotalRecord(res.length);
-      console.log(res);
     }).catch((err)=>{
       console.log(err);
     })

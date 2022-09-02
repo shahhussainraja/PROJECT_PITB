@@ -14,6 +14,37 @@ import userService from "../Services/UserService";
 import { useContext } from 'react';
 import { MainContext } from './Projects';
 
+
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+
+//multiSelect logic 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, workingResources, theme) {
+  return {
+    fontWeight:
+      workingResources.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+
+
 const BoxContainer = styled.div`
 position: relative;
 width: 100%;
@@ -43,7 +74,7 @@ height: 30px;
 color: white;
 position: sticky;
 top:0px;
-background-color: #6a994e;
+background-color: #198754;
 /* background-color: #198754; */
 /* border-radius: 5px 5px 0px 0px; */
 display: flex;
@@ -56,15 +87,30 @@ font-size: 14px;
 
 const EditModel = ({ modelHandle, setModelHandle, data}) => {
 
+    //this array for multiSelect Material ui field
+    const names = [];
+    const theme = useTheme();
+    const [workingResources, setworkingResources] = React.useState(data.R_Working_on_Active_Projects.split(","));
+    
+
   const [records, setRecords] = useState({});
   const pageRefreshCall = useContext(MainContext);
 
-  //Options Data Call
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setworkingResources(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  //form Data Call
   const fetchData = () => {
     userService
       .getFormDocs()
       .then((res) => {
-        // console.log(res);
         setRecords(res);
       })
       .catch((err) => {
@@ -74,11 +120,15 @@ const EditModel = ({ modelHandle, setModelHandle, data}) => {
 
 React.useEffect(fetchData, []);
 
+  //For MultiSelect field 
+  if(Object.keys(records).length !== 0 ){
+    records.developers.map((e)=>(names.push(e.Name)));
+  }
+
 const handleSubmit = (event) => {
   event.preventDefault();
   const docs = Object.fromEntries(new FormData(event.target));
-  console.log(docs);
-  userService.putDocs(data.id,docs).then((res)=>{
+  userService.putDocs(data.id,{docs,workingResources}).then((res)=>{
     setModelHandle(false);
     toast.success('Updated Successfully', {
       position: "bottom-right",
@@ -434,24 +484,53 @@ for(let i=endYear;i>startYear;i--){
                       className="mb-3"
                       controlId="examplseForm.ControlInput1"
                     >
-                      <Form.Label
+                      
+                       {/* Material Ui multiselect */}
+                       <FormControl sx={{ m: 1, width: 300,}}>
+                       <Form.Label
                         className="mb-1"
                         style={{ fontStyle: "italic", fontSize: "14px" }}
                       >
                         Resources Working on Active
                       </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder=""
-                        name="Resources"
-                        size="sm"
-                        defaultValue={data.R_Working_on_Active_Projects}
-                      />
+                        <Select
+                        sx={{backgroundColor:"white",width:"500px"}}
+                        size="small"
+                        fullWidth          
+                        multiple
+                        displayEmpty
+                        value={workingResources}
+                        onChange={handleChange}
+                        input={<OutlinedInput style={{fontSize:"12px",float:"left"}} />}
+                        renderValue={(selected) => {
+                        if (selected.length === 0) {
+                           return <em>select</em>;
+                           }
+
+                         return selected.join(', ');
+                        }}
+                        MenuProps={MenuProps}
+                        inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                        <MenuItem disabled value="">
+                          <em>select</em>
+                        </MenuItem>
+                        {names.map((name) => (
+                          <MenuItem
+                            key={name}
+                            value={name}
+                            style={getStyles(name, workingResources, theme)}
+                          >
+                            {name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                     </Form.Group>
                   </Col>
                   <Col lg={4}>
                     <Form.Group
-                      className="mb-3"
+                      className="mb-3 mt-2"
                       controlId="examplseForm.ControlInput1"
                     >
                       <Form.Label

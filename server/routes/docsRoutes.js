@@ -29,10 +29,12 @@ router.get('/docs',auth,(req, res)=>{
     });
   });
 
-  router.post('/docs',auth,(req, res)=>{
-    const data = req.body;    
+
+  router.post('/docs',(req, res)=>{
+    const data = req.body.data;    
+    const workingResource = req.body.workingResources
     db.query('INSERT INTO `projectwiseresources` (Project,Year,Manager,PM_Coordinator,Status,Department,Higher_Department,NDP_PC,Concerned_DG,Region,Technology,R_Working_on_Active_Projects,Techinical_Lead_Web,Techinical_Lead_Android,GITLAB_ID,Android_Repo,iOS_Repo,Web_Repo,Continuous_Development,Continuous_Integration,team,URL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-       [data.project,data.date,data.manager,data.coordinator,data.status,data.subDepartment,data.department,data.ndp,data.concernDg,data.region,data.technology,data.Resources,data.techLeadWeb,data.techLeadAndroid,data.gitLabId,data.androidRepo,data.iOsRepo,data.webRepo,data.continousDev,data.continousInt,data.team,data.url]
+       [data.project,data.date,data.manager,data.coordinator,data.status,data.subDepartment,data.department,data.ndp,data.concernDg,data.region,data.technology,workingResource.toString(),data.techLeadWeb,data.techLeadAndroid,data.gitLabId,data.androidRepo,data.iOsRepo,data.webRepo,data.continousDev,data.continousInt,data.team,data.url]
        ,function(err, results) {
          if(err){
            console.log(err);
@@ -44,10 +46,14 @@ router.get('/docs',auth,(req, res)=>{
      );
    });
  
+
+
   router.put('/docs/:id',auth,(req, res)=>{
-    const data = req.body;    
+//multiSelect ->toString() use 
+    const data = req.body.docs;
+    const workingResource = req.body.workingResources    
     db.query('UPDATE `projectwiseresources` SET `Project`=?, `Year`=?, `Manager`=?, `PM_Coordinator`=?, `Status`=?, `Department`=?, `Higher_Department`=?, `NDP_PC`=?, `Concerned_DG`=?, `Region`=?, `Technology`=?, `R_Working_on_Active_Projects`=?, `Techinical_Lead_Web`=?, `Techinical_Lead_Android`=?, `GITLAB_ID`=? , `Android_Repo`=?, `iOS_Repo`=?, `Web_Repo`=?, `Continuous_Development`=?, `Continuous_Integration`=?, `team`=?, `URL`=? WHERE `id`= ?',
-       [data.project,data.date,data.manager,data.coordinator,data.status,data.subDepartment,data.department,data.ndp,data.concernDg,data.region,data.technology,data.Resources,data.techLeadWeb,data.techLeadAndroid,data.gitLabId,data.androidRepo,data.iOsRepo,data.webRepo,data.continousDev,data.continousInt,data.team,data.url,req.params.id]
+       [data.project,data.date,data.manager,data.coordinator,data.status,data.subDepartment,data.department,data.ndp,data.concernDg,data.region,data.technology,workingResource.toString(),data.techLeadWeb,data.techLeadAndroid,data.gitLabId,data.androidRepo,data.iOsRepo,data.webRepo,data.continousDev,data.continousInt,data.team,data.url,req.params.id]
        ,function(err, results) {
          if(err){
            console.log(err);
