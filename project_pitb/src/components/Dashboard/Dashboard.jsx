@@ -23,11 +23,13 @@ justify-content: center;
 align-items: center;
 height: 55px;
 width: 230px;
-background-color: #1b4965;
+background-color: #${props=>props.color};
 border-radius: 2px;
+/* font-family: 'Lato', sans-serif;  */
 color:white;
 font-size: medium;
 font-weight:400;
+box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
 `
   const ChartContainer = styled.div`
     padding-top: 20px;;
@@ -254,7 +256,7 @@ let ndpPcPieChartData = {
     },
     series: records.ndpPieData
 }
-
+// color='1b4965'/
 
   return (
 
@@ -262,23 +264,23 @@ let ndpPcPieChartData = {
      {Object.keys(records).length === 0 ? <> </>:
     <>
     <CounterBox>
-    <CounterDiv>
+    <CounterDiv color='1591a5'>
         <CountUp delay={1} end={records?.totalProject}  start={0}   />
         <span>Total Projects</span>
     </CounterDiv>
-    <CounterDiv>
+    <CounterDiv color='28a745'>
         <CountUp delay={1} end={records?.statusBox[0]?.data}  start={0}   />
         <span>In Development</span>
     </CounterDiv>
-    <CounterDiv>
+    <CounterDiv color='ffc107'>
         <CountUp delay={1} end={records?.statusBox[1]?.data}  start={0}   />
         <span style={{fontSize:"14px"}}>Live & Continuous Development</span>
     </CounterDiv> 
-   <CounterDiv>
+   <CounterDiv color='6dd4b1'>
         <CountUp delay={1} end={records?.statusBox[2]?.data}  start={0}   />
         <span style={{fontSize:"14px"}}>Live without Development</span>
     </CounterDiv>
-    <CounterDiv>
+    <CounterDiv color="dc3545">
         <CountUp delay={1} end={records?.statusBox[3]?.data}  start={0}   />
         <span>Closed</span>
     </CounterDiv>

@@ -92,9 +92,6 @@ for (let i = 0; i < contractNdpCount.length; i++) {
 
 
 
-    
-
-
 })
 
 

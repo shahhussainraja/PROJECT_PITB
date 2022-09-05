@@ -10,6 +10,7 @@ const Container = styled.div`
 display: flex;
 padding-top:6px;
 padding-left: 0px;
+
 `
 
 const Left = styled.div`
@@ -23,6 +24,7 @@ align-items: left;
 background-color: #2a4c64;
 color: white;
 border-radius: 0px 5px 5px 0px;
+box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
 `
 
 const Right = styled.div`

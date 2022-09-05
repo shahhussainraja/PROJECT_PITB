@@ -30,7 +30,7 @@ router.get('/docs',auth,(req, res)=>{
   });
 
 
-  router.post('/docs',(req, res)=>{
+  router.post('/docs',auth,(req, res)=>{
     const data = req.body.data;    
     const workingResource = req.body.workingResources
     db.query('INSERT INTO `projectwiseresources` (Project,Year,Manager,PM_Coordinator,Status,Department,Higher_Department,NDP_PC,Concerned_DG,Region,Technology,R_Working_on_Active_Projects,Techinical_Lead_Web,Techinical_Lead_Android,GITLAB_ID,Android_Repo,iOS_Repo,Web_Repo,Continuous_Development,Continuous_Integration,team,URL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
